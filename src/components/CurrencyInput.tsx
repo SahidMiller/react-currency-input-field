@@ -129,9 +129,10 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
         return;
       }
 
-      if (stringValue === '' || stringValue === '-' || stringValue === decimalSeparator) {
+      if (stringValue === '' || stringValue === '-' || stringValue === decimalSeparator || stringValue === decimalSeparator + "0") {
         onValueChange && onValueChange(undefined, name, { float: null, formatted: '', value: '' });
         setStateValue(stringValue);
+        setCursor((cursorPosition || 0) + stringValue.length)
         return;
       }
 
@@ -322,7 +323,7 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
         userValue !== undefined &&
         userValue !== null &&
         stateValue !== '-' &&
-        (!decimalSeparator || stateValue !== decimalSeparator)
+        (!decimalSeparator || (stateValue !== decimalSeparator && stateValue !== decimalSeparator + "0"))
       ) {
         return formatValue({
           ...formatValueOptions,
